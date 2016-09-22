@@ -1,27 +1,25 @@
-let cachedElement = [];
+let cachedElement = {};
 let memorize = function(){
   let module = {};
   module.cacheGetElementById = function (element){
-    let getIndex = cachedElement.indexOf(document.getElementById(element));
-    console.log(getIndex);
-    if(getIndex < 0){
-      console.log(cachedElement);
-      return cachedElement.push(document.getElementById(element));
-    } else {
-      console.log(cachedElement);
-      return cachedElement[getIndex];
+    for (let property in cachedElement){
+      if(property !== element){
+        cachedElement[element] = document.getElementById(element);
+        return;
+      } else {
+        return cachedElement[element];
+      }
     }
 
   };
   module.cacheQuerySelector = function (element){
-    let getIndex = cachedElement.indexOf(document.querySelector(element));
-    if(getIndex < 0){
-      console.log(getIndex);
-      console.log(cachedElement);
-      return cachedElement.push(document.querySelector(element));
-    } else {
-      console.log(cachedElement);
-      return cachedElement[getIndex];
+    for (let property in cachedElement){
+      if(property !== element){
+        console.log(cachedElement[element] = document.querySelector(element));
+        return;
+      } else {
+        return cachedElement[element];
+      }
     }
   };
   return module;
@@ -34,3 +32,4 @@ console.timeEnd('hello');
 console.time('hello');
 module.cacheGetElementById('hello');
 console.timeEnd('hello');
+module.cacheQuerySelector('#hello');
